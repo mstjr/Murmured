@@ -32,14 +32,6 @@ public class MumbleServer implements IMumbleServer {
     private final int MAX_BANDWIDTH = 320;
 
 
-    public MetaPrx getProxy() {
-        return proxy;
-    }
-
-    public ServerPrx getServer() {
-        return server;
-    }
-
     public MumbleServer(ServerPrx server, MurmurProxy murmurProxy) {
         this.murmurProxy = murmurProxy;
         proxy = murmurProxy.getMeta();
@@ -70,7 +62,6 @@ public class MumbleServer implements IMumbleServer {
             return false;
         }
     }
-
 
     @Override
     public int getOnline() {
@@ -820,8 +811,7 @@ public class MumbleServer implements IMumbleServer {
         }
 
         // update in cache
-        if (entity.onlineUsers.containsKey(user.id))
-            entity.onlineUsers.replace(user.id, user);
+        if (entity.onlineUsers.containsKey(user.id)) entity.onlineUsers.replace(user.id, user);
         else entity.onlineUsers.put(user.id, user);
     }
 
@@ -919,8 +909,7 @@ public class MumbleServer implements IMumbleServer {
     }
 
     private VirtualServerEntity.Tree[] getTree(Tree[] tree) {
-        if (tree == null)
-            return null;
+        if (tree == null) return null;
 
         VirtualServerEntity.Tree[] obj = new VirtualServerEntity.Tree[tree.length];
         for (int i = 0; i < tree.length; i++) {
@@ -930,8 +919,7 @@ public class MumbleServer implements IMumbleServer {
     }
 
     private VirtualServerEntity.Tree getTreeItem(Tree tree) {
-        if (tree == null)
-            return null;
+        if (tree == null) return null;
 
         VirtualServerEntity.Tree obj = new VirtualServerEntity.Tree();
         obj.channel = getChannel(tree.channel);
@@ -948,11 +936,18 @@ public class MumbleServer implements IMumbleServer {
         return obj;
     }
 
+    public MetaPrx getMetaProxy() {
+        return proxy;
+    }
+
+    public ServerPrx getMurmurServer() {
+        return server;
+    }
 
     boolean closed = false;
 
     @Override
-    public void close() throws RuntimeException{
+    public void close() throws RuntimeException {
         if (!closed) {
             try {
                 server.stop();

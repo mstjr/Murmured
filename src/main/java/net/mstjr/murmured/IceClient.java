@@ -5,6 +5,7 @@ import net.mstjr.murmur.exceptions.invalid.InvalidSecretException;
 import net.mstjr.murmur.prx.MetaPrx;
 
 import java.lang.Exception;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class IceClient extends Application {
@@ -20,7 +21,7 @@ public class IceClient extends Application {
     private boolean debug = false;
 
     public MetaPrx connect(String address, int port, String secret, String callbackAddress, int callbackPort, int timeout) throws ConnectionRefusedException, InvalidSecretException {
-        if (debug) System.out.println("Preparing to connect to " + address + ":" + port + " with secret " + secret);
+        if (debug) LOGGER.info("Preparing to connect to " + address + ":" + port + " with secret " + secret);
         this.timeout = timeout;
 
         run(new String[0]);
@@ -48,18 +49,18 @@ public class IceClient extends Application {
 
             meta.ice_ping();
         } catch (Exception e) {
-            if (debug) System.err.println("Error connecting to server: " + e.getMessage());
+            if (debug) LOGGER.log(Level.SEVERE, "Error connecting to server: " + e.getMessage());
             throw new ConnectionRefusedException();
         }
 
         try {
             meta.getAllServers()[0].setConf("allowhtml", "true");
         } catch (InvalidSecretException e) {
-            if (debug) System.err.println("Invalid secret: " + e.getMessage());
+            if (debug) LOGGER.log(Level.SEVERE, "Invalid secret: " + e.getMessage());
             throw new InvalidSecretException();
         }
 
-        if (debug) System.out.println("Successfully connected to " + address + ":" + port + " with secret " + secret);
+        if (debug) LOGGER.info("Successfully connected to " + address + ":" + port + " with secret " + secret);
         return meta;
     }
 

@@ -1,5 +1,8 @@
 package net.mstjr.murmured.api;
 
+/**
+ * @implNote This interface is not working yet.
+ */
 public interface IVirtualServerKeeper {
 
     boolean backup(String filename);

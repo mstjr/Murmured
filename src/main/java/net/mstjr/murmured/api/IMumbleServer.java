@@ -8,7 +8,6 @@ import java.util.Map;
 
 public interface IMumbleServer extends Closeable {
 
-
     IVirtualServerKeeper getKeeper();
 
     VirtualServerEntity getEntity();
