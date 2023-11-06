@@ -32,4 +32,4 @@ Make sure to replace **`"127.0.0.1"`**, **`6502`**, and **`"secret"`** with the 
 
 ##Documentation
 
-For more information and detailed documentation, please visit our [wiki](https://github.com/mstjr/Murmured/wiki)https://github.com/mstjr/Murmured/wiki
+For more information and detailed documentation, please visit our [wiki](https://github.com/mstjr/Murmured/wiki)
