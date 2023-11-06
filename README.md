@@ -30,6 +30,10 @@ try (MumbleProxy proxy = new MumbleProxy()) {
 
 Make sure to replace **`"127.0.0.1"`**, **`6502`**, and **`"secret"`** with the actual server address, port, and secret.
 
+## Contributions
+
+Contributions to the `Murmured` project are welcome. If you'd like to contribute, please follow the standard GitHub fork and pull request workflow. Your contributions can include bug fixes, new features, improvements to the documentation, and more. We appreciate your help in making this project even better for the community.
+
 ## Documentation
 
 For more information and detailed documentation, please visit our [wiki](https://github.com/mstjr/Murmured/wiki)
