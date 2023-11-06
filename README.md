@@ -7,7 +7,7 @@ This is a Java wrapper for the Mumble server using the Ice middleware.
 You can obtain the Murmur Ice Wrapper for Java in two ways:
 
 - **Download Jar File**: You can download the JAR file directly from the repository.
-- **Maven Local Downloader**: If you are using Maven, you can add the wrapper as a dependency in your project.
+- **Maven Local Downloader**: If you are using Maven or Gradle, you can add the wrapper as a dependency in your project. (It will be avaialable soon)
 
 ## Usage Example
 
