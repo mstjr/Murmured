@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'net.mstjr'
+version = '1.0-SNAPSHOT'
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.zeroc:ice:3.7.2'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            groupId = 'net.mstjr'
+            artifactId = 'murmured'
+            version = 'BETA-0.0.2'
+        }
+    }
+
+    repositories {
+        mavenLocal()
+    }
+}
