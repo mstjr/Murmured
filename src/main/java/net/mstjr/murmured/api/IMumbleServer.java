@@ -8,13 +8,13 @@ import java.util.Map;
 
 public interface IMumbleServer extends Closeable {
 
-    IVirtualServerKeeper getKeeper();
+    IMumbleServerSaver getKeeper();
 
     VirtualServerEntity getEntity();
 
     boolean isRunning();
 
-    int getOnline();
+    int getOnlinesSize();
 
     int getUptime();
 
@@ -237,7 +237,6 @@ public interface IMumbleServer extends Closeable {
 
     void updateUserState(VirtualServerEntity.OnlineUser user);
 
-
     void kickUser(int sessionId, String reason);
 
     Map<Integer, VirtualServerEntity.Ban> getBans(boolean cache);
@@ -248,6 +247,30 @@ public interface IMumbleServer extends Closeable {
 
     void setBans(Map<Integer, VirtualServerEntity.Ban> bans);
 
+    /**
+     * Register a listener
+     * @param listener The listener to register
+     * @return The id of the listener
+     */
+    int registerListener(MumbleServerListener listener);
+
+    int registerContextAction(int userId, String action, String text, MumbleServerListener listener, int channelId);
+    default int registerContextAction(int userId, String action, String text, MumbleServerListener listener){
+        return registerContextAction(userId, action, text, listener, -1);
+    }
+
+    /**
+     * Unregister a listener
+     * @param listener The listener to unregister
+     */
+    void unregisterListener(MumbleServerListener listener);
+
+    /**
+     * Unregister a listener by id
+     * @param id The id of the listener to unregister
+     * @see #registerListener(MumbleServerListener)
+     */
+    void unregisterListener(int id);
 
     VirtualServerEntity.Tree getTree();
 

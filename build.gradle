@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'net.mstjr'
-version = 'BETA-0.0.2'
+version = 'BETA-0.0.3'
 
 
 repositories {
@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     implementation 'com.zeroc:ice:3.7.2'
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 shadowJar {
@@ -29,7 +30,7 @@ publishing {
 
             groupId = 'net.mstjr'
             artifactId = 'murmured'
-            version = 'BETA-0.0.2'
+            version = 'BETA-0.0.3'
         }
     }
 

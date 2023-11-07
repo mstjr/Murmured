@@ -3,6 +3,7 @@ package net.mstjr.murmured.api;
 import com.zeroc.Ice.ConnectionRefusedException;
 import net.mstjr.murmur.exceptions.invalid.InvalidSecretException;
 import net.mstjr.murmur.prx.MetaPrx;
+import net.mstjr.murmured.MumbleProxy;
 import net.mstjr.murmured.MumbleServer;
 
 import java.io.Closeable;
@@ -108,6 +109,8 @@ public interface IMumbleProxy extends Closeable {
     /**
      * Gets the next available server port.
      * @return The next available server port.
+     * FIXME: Give the same port every time.
+     * @deprecated Do not use.
      */
     int getNextAvailableServerPort();
 
@@ -122,6 +125,10 @@ public interface IMumbleProxy extends Closeable {
      * @return The port of the proxy.
      */
     int getPort();
+
+    int registerListener(MumbleProxyListener listener);
+    void unregisterListener(int id);
+    void unregisterListener(MumbleProxyListener listener);
 
     /**
      * Get the meta proxy.

@@ -91,8 +91,14 @@ public class IceClient extends Application {
         return 0;
     }
 
+    public Communicator getIc() {
+        return ic;
+    }
+
     public void close() {
+        System.out.println("Closing connection");
         ic.destroy();
+        if(debug) LOGGER.info("Connection closed");
     }
 
     public void setDebug(boolean b) {

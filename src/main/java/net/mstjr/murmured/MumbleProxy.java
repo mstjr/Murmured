@@ -1,6 +1,7 @@
 package net.mstjr.murmured;
 
 import com.zeroc.Ice.*;
+import net.mstjr.murmur.exceptions.invalid.InvalidCallbackException;
 import net.mstjr.murmur.exceptions.invalid.InvalidSecretException;
 import net.mstjr.murmur.prx.*;
 import net.mstjr.murmured.api.*;
@@ -10,7 +11,7 @@ import java.lang.Exception;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MurmurProxy implements IMumbleProxy {
+public class MumbleProxy implements IMumbleProxy {
 
     private Map<Integer, IMumbleServer> servers = new HashMap<>();
 
@@ -27,6 +28,10 @@ public class MurmurProxy implements IMumbleProxy {
 
     private Map<String, String> _defaultConf = null;
 
+    private MetaCallbackPrx metaCallbackPrx;
+
+    private Map<Integer, MumbleProxyListener> listeners = new HashMap<>();
+
 
     /**
      * Connect to Murmur server
@@ -42,6 +47,10 @@ public class MurmurProxy implements IMumbleProxy {
      */
     @Override
     public void connect(String address, int port, String secret, String callbackAddress, int callbackPort, int timeout) throws ConnectionRefusedException, InvalidSecretException {
+        if (isConnected())
+            throw new RuntimeException("Already connected");
+
+        this.closed = false;
         this.address = address;
         this.port = port;
         this.callbackAddress = callbackAddress;
@@ -62,7 +71,6 @@ public class MurmurProxy implements IMumbleProxy {
         if (isNewAllServers) {
             isNewAllServers = false;
 
-            // add to cacheè
             try {
                 for (ServerPrx allServer : meta.getAllServers()) {
                     IMumbleServer vs = new MumbleServer(allServer, this);
@@ -207,6 +215,7 @@ public class MurmurProxy implements IMumbleProxy {
 
     /**
      * Get next available server port
+     *
      * @return Next available server port
      */
     @Override
@@ -237,6 +246,7 @@ public class MurmurProxy implements IMumbleProxy {
 
     /**
      * Get host
+     *
      * @return Host
      */
     @Override
@@ -246,6 +256,7 @@ public class MurmurProxy implements IMumbleProxy {
 
     /**
      * Get port
+     *
      * @return Port
      */
     @Override
@@ -253,8 +264,58 @@ public class MurmurProxy implements IMumbleProxy {
         return port;
     }
 
+    @Override
+    public int registerListener(MumbleProxyListener listener) {
+        if (metaCallbackPrx == null) {
+            if (!this.closed)
+                metaCallbackPrx = MetaCallbackPrx.uncheckedCast(adapter.addWithUUID(new MetaCallbackImpl(this)));
+            try {
+                getMeta().addCallback(metaCallbackPrx);
+            } catch (InvalidCallbackException | InvalidSecretException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        int id = listeners.isEmpty() ? 0 : ((int) Utils.getLastElement(listeners.keySet())) + 1;
+        listeners.put(id, listener);
+        return 0;
+    }
+
+    @Override
+    public void unregisterListener(int id) {
+        listeners.remove(id);
+
+        if (listeners.isEmpty()) {
+            try {
+                meta.removeCallback(metaCallbackPrx);
+            } catch (InvalidCallbackException | InvalidSecretException e) {
+                e.printStackTrace();
+            }
+            metaCallbackPrx = null;
+        }
+    }
+
+    @Override
+    public void unregisterListener(MumbleProxyListener listener) {
+        listeners.entrySet().removeIf(entry -> entry.getValue().equals(listener));
+
+        if (listeners.isEmpty()) {
+            try {
+                meta.removeCallback(metaCallbackPrx);
+            } catch (InvalidCallbackException | InvalidSecretException e) {
+                e.printStackTrace();
+            }
+            metaCallbackPrx = null;
+        }
+    }
+
+    public Map<Integer, MumbleProxyListener> getListeners() {
+        return listeners;
+    }
+
     /**
      * Get meta
+     *
      * @return Meta
      */
     @Override
@@ -264,6 +325,7 @@ public class MurmurProxy implements IMumbleProxy {
 
     /**
      * Get client
+     *
      * @return Client
      */
     public IceClient getClient() {
@@ -272,6 +334,7 @@ public class MurmurProxy implements IMumbleProxy {
 
     /**
      * Get adapter
+     *
      * @return Adapter
      */
     public ObjectAdapter getAdapter() {
@@ -280,6 +343,7 @@ public class MurmurProxy implements IMumbleProxy {
 
     /**
      * Get version
+     *
      * @return Version
      */
     @Override
@@ -288,6 +352,9 @@ public class MurmurProxy implements IMumbleProxy {
     }
 
 
+    public Communicator getCommunicator() {
+        return client.getIc();
+    }
 
     private boolean closed = false;
 
@@ -297,13 +364,43 @@ public class MurmurProxy implements IMumbleProxy {
     @Override
     public void close() {
         if (!closed) {
-            this.client.close();
+            this.servers.forEach((id, server) -> {
+                try {
+                    server.close();
+                    System.out.println("Closed server " + id);
+                } catch (IOException e) {
+                    System.out.println("Failed to close server " + id);
+                }
+            });
+
+            if (metaCallbackPrx != null) {
+                try {
+                    meta.removeCallback(metaCallbackPrx);
+                } catch (InvalidCallbackException e) {
+                    throw new RuntimeException(e);
+                } catch (InvalidSecretException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            this.servers.forEach((id, server) -> {
+                server.stop();
+                System.out.println("Closed server " + id);
+            });
+
+            for (int i : this.servers.keySet()) {
+                deleteServer(i);
+            }
+
+            listeners.clear();
             closed = true;
+            this.client.close();
         }
     }
 
     /**
      * Set debug (Debug mode will print all messages if true)
+     *
      * @param debug Debug
      */
     public void setDebug(boolean debug) {

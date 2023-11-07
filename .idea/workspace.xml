@@ -9,7 +9,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb55a65f-a8ce-46cd-ac8f-6fdd4823ef84" name="Changes" comment="" />
+    <list default="true" id="bb55a65f-a8ce-46cd-ac8f-6fdd4823ef84" name="Changes" comment="B0.0.2">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/api/MumbleServerListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/IceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/IceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/MumbleServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/MumbleServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/MurmurProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/MumbleProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/ServerCallbackImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/ServerCallbackImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/VirtualServerKeeper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/VirtualServerKeeper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/api/IMumbleProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/api/IMumbleProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/api/IMumbleServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/api/IMumbleServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/api/IVirtualServerCallbackHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/api/IVirtualServerContextCallbackHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/api/IVirtualServerKeeper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/api/IVirtualServerKeeper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/api/VirtualServerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/api/VirtualServerEntity.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,13 +62,16 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="2XivZTpprQ53LoAB8tAghRqP35B" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
@@ -76,23 +97,18 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
-      <recent name="net.mstjr.test" />
+      <recent name="" />
       <recent name="net.mstjr.murmured" />
+      <recent name="net.mstjr.test" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Mathys St-Jean-Rioux\Documents\MC\Murmured2.0\src\main\java" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Murmured2.0 [publish]">
-    <configuration name="Core" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="net.mstjr.Core" />
-      <module name="Murmured2.0.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="net.mstjr.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+  <component name="RunManager" selected="Application.Core (1)">
+    <configuration name="Core (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Core" />
+      <module name="Murmured2.0.test" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -170,10 +186,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Murmured2.0 [publish]" />
+        <item itemvalue="Application.Core (1)" />
         <item itemvalue="Gradle.Murmured2.0 [shadowJar]" />
         <item itemvalue="Application.Corfe" />
         <item itemvalue="Application.test" />
-        <item itemvalue="Application.Core" />
       </list>
     </recent_temporary>
   </component>
@@ -195,7 +211,27 @@
       <workItem from="1699273888929" duration="4362000" />
       <workItem from="1699281554404" duration="948000" />
       <workItem from="1699282639037" duration="2069000" />
+      <workItem from="1699284965632" duration="2018000" />
+      <workItem from="1699292181206" duration="6161000" />
+      <workItem from="1699313707382" duration="1146000" />
     </task>
+    <task id="LOCAL-00001" summary="B0.0.2">
+      <option name="closed" value="true" />
+      <created>1699285010920</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1699285010920</updated>
+    </task>
+    <task id="LOCAL-00002" summary="B0.0.2">
+      <option name="closed" value="true" />
+      <created>1699285130886</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699285130886</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,6 +247,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="B0.0.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="B0.0.2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

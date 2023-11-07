@@ -1,5 +1,7 @@
 package net.mstjr.murmured;
 
+import com.zeroc.Ice.ObjectAdapter;
+import net.mstjr.murmur.exceptions.invalid.InvalidCallbackException;
 import net.mstjr.murmur.exceptions.invalid.InvalidSecretException;
 import net.mstjr.murmur.exceptions.server.ServerBootedException;
 import net.mstjr.murmur.logging.LogEntry;
@@ -10,8 +12,7 @@ import net.mstjr.murmur.proxy.server.entities.Group;
 import net.mstjr.murmur.proxy.server.entities.Tree;
 import net.mstjr.murmur.proxy.server.users.User;
 import net.mstjr.murmur.proxy.server.users.UserInfo;
-import net.mstjr.murmur.prx.MetaPrx;
-import net.mstjr.murmur.prx.ServerPrx;
+import net.mstjr.murmur.prx.*;
 import net.mstjr.murmured.api.*;
 
 import java.text.SimpleDateFormat;
@@ -21,31 +22,32 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MumbleServer implements IMumbleServer {
-    private IVirtualServerKeeper keeper;
+    private IMumbleServerSaver keeper;
     private VirtualServerEntity entity;
 
     private ServerPrx server;
     private MetaPrx proxy;
-    private MurmurProxy murmurProxy;
+    private MumbleProxy mumbleProxy;
     private String murmurVersion;
 
     private final int MAX_BANDWIDTH = 320;
+    private Map<Integer, MumbleServerListener> listeners = new HashMap<>();
 
-
-    public MumbleServer(ServerPrx server, MurmurProxy murmurProxy) {
-        this.murmurProxy = murmurProxy;
-        proxy = murmurProxy.getMeta();
+    private ServerCallbackPrx callbackPrx;
+    private ServerContextCallbackPrx contextCallbackPrx;
+    public MumbleServer(ServerPrx server, MumbleProxy mumbleProxy) {
+        this.mumbleProxy = mumbleProxy;
+        proxy = mumbleProxy.getMeta();
         this.server = server;
 
         entity = new VirtualServerEntity();
-        entity.address = murmurProxy.getHost();
-        murmurVersion = murmurProxy.getVersion();
-
-        keeper = new VirtualServerKeeper(this);
+        entity.address = mumbleProxy.getHost();
+        murmurVersion = mumbleProxy.getVersion();
+        keeper = new MumbleServerSaver(this);
     }
 
     @Override
-    public IVirtualServerKeeper getKeeper() {
+    public IMumbleServerSaver getKeeper() {
         return keeper;
     }
 
@@ -64,7 +66,7 @@ public class MumbleServer implements IMumbleServer {
     }
 
     @Override
-    public int getOnline() {
+    public int getOnlinesSize() {
         try {
             return server.getUsers().size();
         } catch (Exception e) {
@@ -83,6 +85,9 @@ public class MumbleServer implements IMumbleServer {
 
     @Override
     public boolean start() {
+        if(closed){
+            throw new RuntimeException("Server is closed");
+        }
         try {
             if (!server.isRunning()) {
                 server.start();
@@ -434,7 +439,7 @@ public class MumbleServer implements IMumbleServer {
             }
 
             if (getDefault) {
-                murmurProxy.getDefaultConf().forEach((k, v) -> {
+                mumbleProxy.getDefaultConf().forEach((k, v) -> {
                     if (!entity.config.containsKey(k)) entity.config.put(k, v);
                 });
 
@@ -458,7 +463,7 @@ public class MumbleServer implements IMumbleServer {
             if (value == null || value.isEmpty()) {
                 // return default config value if exist
                 if (getDefault)
-                    if (murmurProxy.getDefaultConf().containsKey(key)) value = murmurProxy.getDefaultConf().get(key);
+                    if (mumbleProxy.getDefaultConf().containsKey(key)) value = mumbleProxy.getDefaultConf().get(key);
 
                 if (value == null || value.isEmpty()) return null;
             }
@@ -899,6 +904,87 @@ public class MumbleServer implements IMumbleServer {
     }
 
     @Override
+    public int registerListener(MumbleServerListener listener) {
+        if(callbackPrx == null) {
+            ObjectAdapter adapter = mumbleProxy.getAdapter();
+            callbackPrx = ServerCallbackPrx.uncheckedCast(adapter.addWithUUID(new ServerCallbackImpl(this)));
+
+            try {
+                getMurmurServer().addCallback(callbackPrx);
+
+            } catch (InvalidCallbackException e) {
+                System.out.println("The callback provided is invalid.");
+                return -1;
+            } catch (InvalidSecretException e) {
+                System.out.println("The secret provided is invalid.");
+                return -1;
+            } catch (ServerBootedException e) {
+                System.out.println("The server is already booted.");
+                return -1;
+            }
+        }
+
+        int id = listeners.isEmpty() ? 0 : ((int) Utils.getLastElement(listeners.keySet())) + 1;
+        listeners.put(id, listener);
+        return 0;
+    }
+
+    @Override
+    public int registerContextAction(int userId, String action, String text, MumbleServerListener listener, int contextAction) {
+        if (contextCallbackPrx == null) {
+            try {
+                contextCallbackPrx = ServerContextCallbackPrx.uncheckedCast(mumbleProxy.getAdapter().addWithUUID(new ServerContextCallbackImpl(this)));
+
+                getMurmurServer().addContextCallback(userId, action, text, contextCallbackPrx, contextAction);
+            } catch (Exception e) {
+                System.out.println("Failed to create context callback.");
+                e.printStackTrace();
+                return -1;
+            }
+        }
+
+        int id = listeners.isEmpty() ? 0 : ((int) Utils.getLastElement(listeners.keySet())) + 1;
+        listeners.put(id, listener);
+        return 0;
+    }
+
+    @Override
+    public void unregisterListener(MumbleServerListener listener) {
+
+        listeners.forEach((k, v) -> {
+            if (v == listener) listeners.remove(k);
+        });
+
+        if (listeners.isEmpty()) {
+            try{
+                if(callbackPrx != null) getMurmurServer().removeCallback(callbackPrx);
+                if(contextCallbackPrx != null) getMurmurServer().removeContextCallback(contextCallbackPrx);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void unregisterListener(int id) {
+        listeners.remove(id);
+
+        if (listeners.isEmpty()) {
+            try{
+                if(callbackPrx != null) getMurmurServer().removeCallback(callbackPrx);
+                if(contextCallbackPrx != null) getMurmurServer().removeContextCallback(contextCallbackPrx);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public Map<Integer, MumbleServerListener> getListeners() {
+        return listeners;
+    }
+
+    @Override
     public VirtualServerEntity.Tree getTree() {
         try {
             return getTreeItem(server.getTree());
@@ -946,17 +1032,25 @@ public class MumbleServer implements IMumbleServer {
 
     boolean closed = false;
 
+
     @Override
     public void close() throws RuntimeException {
         if (!closed) {
             try {
-                server.stop();
+                try{
+                    if(callbackPrx != null) getMurmurServer().removeCallback(callbackPrx);
+                    if(contextCallbackPrx != null) getMurmurServer().removeContextCallback(contextCallbackPrx);
+                }catch(InvalidCallbackException e){
+                    e.printStackTrace();
+                }
+
             } catch (InvalidSecretException e) {
-                throw new RuntimeException(e);
+                System.out.println("The secret provided is invalid.");
             } catch (ServerBootedException e) {
-                throw new RuntimeException(e);
+                System.out.println("The server isn't booted.");
             }
 
+            listeners.clear();
             closed = true;
         }
     }

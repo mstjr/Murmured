@@ -8,13 +8,13 @@ public class VirtualServerEntity {
     public int id;
     public String address;
     public int port;
-    public String MurmurVersion;
 
     public Map<String, String> config = new HashMap<String, String>();
     public Map<Integer, User> users = new HashMap<Integer, User>();
     public Map<Integer, Channel> channels = new HashMap<Integer, Channel>();
     public Map<Integer, Ban> bans = new HashMap<Integer, Ban>();
     public Map<Integer, OnlineUser> onlineUsers = new HashMap<Integer, OnlineUser>();
+
 
     public static class User {
 

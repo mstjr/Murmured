@@ -3,6 +3,7 @@ package net.mstjr.murmured;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
+import java.util.Set;
 
 public class Utils {
     /**
@@ -19,5 +20,10 @@ public class Utils {
         } catch (Exception ex) {
             return false;
         }
+    }
+
+    public static Object getLastElement(Set<? extends Object> array) {
+        Object[] array2 = array.toArray();
+        return array2[array2.length - 1];
     }
 }

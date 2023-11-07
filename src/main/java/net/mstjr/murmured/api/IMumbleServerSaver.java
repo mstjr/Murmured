@@ -3,18 +3,18 @@ package net.mstjr.murmured.api;
 /**
  * @implNote This interface is not working yet.
  */
-public interface IVirtualServerKeeper {
+public interface IMumbleServerSaver {
 
     boolean backup(String filename);
-    String backupToXml();
+    String backupToJson();
 
     boolean restore(String filename);
-    boolean restoreFromXml(String xml);
+    boolean restoreFromJson(String xml);
     boolean restore(VirtualServerEntity entity);
 
 
-    String saveToXml(VirtualServerEntity entity);
+    String saveToJson(VirtualServerEntity entity);
     boolean saveToFile(String filename, VirtualServerEntity entity);
-    VirtualServerEntity loadFromXml(String sxml);
+    VirtualServerEntity loadFromjson(String sxml);
     VirtualServerEntity loadFromFile(String filename);
 }
