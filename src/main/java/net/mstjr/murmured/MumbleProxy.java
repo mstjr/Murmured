@@ -233,7 +233,6 @@ public class MumbleProxy implements IMumbleProxy {
             if (newPort > ((Short.MAX_VALUE) * 2))
                 newPort = ((Short.MAX_VALUE) * 2) - (newPort - defaultPort);
 
-            // check port for availability (it should be closed)
             if (!Utils.isPortAvailable(address, newPort)) {
                 port = newPort;
                 break;

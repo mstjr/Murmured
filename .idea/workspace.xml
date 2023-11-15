@@ -9,7 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb55a65f-a8ce-46cd-ac8f-6fdd4823ef84" name="Changes" comment="B0.0.3" />
+    <list default="true" id="bb55a65f-a8ce-46cd-ac8f-6fdd4823ef84" name="Changes" comment="B0.0.3">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/MumbleProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/MumbleProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/MumbleServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/MumbleServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/api/IMumbleServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/mstjr/murmured/api/IMumbleServer.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,6 +51,23 @@
   <component name="Git.Settings">
     <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;mstjr&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="fbd1d194-f2d1-4c16-9877-6a9eb83bcd9c" />
+        <option name="url" value="https://github.com/mstjr/Murmured.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -87,7 +109,7 @@
       <recent name="C:\Users\Mathys St-Jean-Rioux\Documents\MC\Murmured2.0\src\main\java" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Core (1)">
+  <component name="RunManager" selected="Application.TestCore">
     <configuration name="Core (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Core" />
       <module name="Murmured2.0.test" />
@@ -108,12 +130,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="net.mstr.murmured.test" />
+    <configuration name="TestCore" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="net.mstjr.core.TestCore" />
       <module name="Murmured2.0.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="net.mstr.murmured.*" />
+          <option name="PATTERN" value="net.mstjr.core.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -167,11 +189,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TestCore" />
         <item itemvalue="Gradle.Murmured2.0 [publish]" />
         <item itemvalue="Application.Core (1)" />
         <item itemvalue="Gradle.Murmured2.0 [shadowJar]" />
         <item itemvalue="Application.Corfe" />
-        <item itemvalue="Application.test" />
       </list>
     </recent_temporary>
   </component>
@@ -195,7 +217,13 @@
       <workItem from="1699282639037" duration="2069000" />
       <workItem from="1699284965632" duration="2018000" />
       <workItem from="1699292181206" duration="6161000" />
-      <workItem from="1699313707382" duration="1580000" />
+      <workItem from="1699313707382" duration="2427000" />
+      <workItem from="1699373266309" duration="25000" />
+      <workItem from="1699378842090" duration="124000" />
+      <workItem from="1699668368191" duration="16000" />
+      <workItem from="1699726998335" duration="1134000" />
+      <workItem from="1699729778771" duration="1207000" />
+      <workItem from="1699804622750" duration="77000" />
     </task>
     <task id="LOCAL-00001" summary="B0.0.2">
       <option name="closed" value="true" />
@@ -221,7 +249,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699316580025</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="B0.0.3">
+      <option name="closed" value="true" />
+      <created>1699316659642</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1699316659642</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

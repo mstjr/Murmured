@@ -254,9 +254,9 @@ public interface IMumbleServer extends Closeable {
      */
     int registerListener(MumbleServerListener listener);
 
-    int registerContextAction(int userId, String action, String text, MumbleServerListener listener, int channelId);
-    default int registerContextAction(int userId, String action, String text, MumbleServerListener listener){
-        return registerContextAction(userId, action, text, listener, -1);
+    int registerContextAction(int sessionId, String action, String text, MumbleServerListener listener, int channelId);
+    default int registerContextAction(int sessionId, String action, String text, MumbleServerListener listener){
+        return registerContextAction(sessionId, action, text, listener, -1);
     }
 
     /**

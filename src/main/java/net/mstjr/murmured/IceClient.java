@@ -54,7 +54,11 @@ public class IceClient extends Application {
         }
 
         try {
-            meta.getAllServers()[0].setConf("allowhtml", "true");
+            if(meta.getAllServers().length == 0) {
+                if (debug) LOGGER.log(Level.WARNING, "No servers found, can't check connection, to ensure verification please enable the default server");
+            }else {
+                meta.getAllServers()[0].setConf("allowhtml", "true");
+            }
         } catch (InvalidSecretException e) {
             if (debug) LOGGER.log(Level.SEVERE, "Invalid secret: " + e.getMessage());
             throw new InvalidSecretException();

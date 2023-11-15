@@ -930,12 +930,12 @@ public class MumbleServer implements IMumbleServer {
     }
 
     @Override
-    public int registerContextAction(int userId, String action, String text, MumbleServerListener listener, int contextAction) {
+    public int registerContextAction(int sessionId, String action, String text, MumbleServerListener listener, int contextAction) {
         if (contextCallbackPrx == null) {
             try {
                 contextCallbackPrx = ServerContextCallbackPrx.uncheckedCast(mumbleProxy.getAdapter().addWithUUID(new ServerContextCallbackImpl(this)));
 
-                getMurmurServer().addContextCallback(userId, action, text, contextCallbackPrx, contextAction);
+                getMurmurServer().addContextCallback(sessionId, action, text, contextCallbackPrx, contextAction);
             } catch (Exception e) {
                 System.out.println("Failed to create context callback.");
                 e.printStackTrace();
