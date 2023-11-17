@@ -9,6 +9,8 @@ You can obtain the Murmur Ice Wrapper for Java in two ways:
 - **Download Jar File**: You can download the JAR file directly from the repository.
 - **Maven Local Downloader**: If you are using Maven or Gradle, you can add the wrapper as a dependency in your project. Simply open MurmuredDownloader.zip and run the Batch file ;)
 
+Donc forget to add the ZeroC api 3.7.2 in your dependencies.
+
 ## Usage Example
 
 Here is an example of how to use the Murmur Ice Wrapper for Java in your code:
